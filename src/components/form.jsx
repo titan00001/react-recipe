@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 
 
 
@@ -8,7 +8,7 @@ function Form(props) {
     const [inputs, setInputs] = useState([""]);
 
     const addInput = () => {
-        setInputs(Object.assign([...inputs], { [inputs.length - 1]: "" }));
+        setInputs(Object.assign([...inputs], { [inputs.length]: "" }));
     }
 
     const setInput = (i, v) => {
@@ -19,12 +19,19 @@ function Form(props) {
         setInputs(inputs.filter((_, index) => !(index === i)));
     }
 
-    const sendDataToParent = () => {
-        const info = inputs;
-        console.log(props.getData);
-        props.getData(info);
-        console.log(props.getData);
-    }
+    // var sendDataToParent = () => {
+    //     const info = inputs;
+    //     props.getData(info);
+    // }
+
+
+    useEffect(() => {
+        if(props.listen === true){ 
+            const info = {"name": props.name, "content" : inputs};
+            // console.log("hello2")
+            props.getData(info);
+        }
+    }, [props.listen, inputs, props.getData, props, props.name]);
 
 
     return (
@@ -39,8 +46,7 @@ function Form(props) {
                 ))
             }
 
-            <button onClick={ e => addInput(inputs.push("")) }>Add</button>       
-            <button onClick={ sendDataToParent }>Display</button>
+            <button onClick={ e => addInput() }>Add</button>       
         </div>
     );
 }

@@ -1,19 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 // import FeedbackDiv from '../components/feedback'
 // import dosa from '../testRecipe'
 import Form from '../components/form';
 
 function RecipeCreator() {
 
-  let d = "";
+  const [ping, setPing] = useState(false);
 
-  const callbackFunction = (child) => {
-    d = child;
-    console.log(child);
+
+  const callbackFunction = (data) => {
+    // console.log("bye");
+    console.log(data);
+    setPing(false);
+
   }
 
   const handleData = () => {
-    console.log(d);
+    // console.log("hello")
+    setPing(true);
   }
 
 
@@ -33,17 +37,17 @@ function RecipeCreator() {
 
       <div>
         <label>Tags</label>
-        <Form getData = {callbackFunction}/>
+        <Form getData = {callbackFunction} listen = {ping} name = 'tags' />
       </div>
 
       <div>
         <h3>Materials Required</h3>
-        <Form getData = {callbackFunction}/>
+        <Form getData = {callbackFunction} listen = {ping} name = 'materials'/>
       </div>
 
       <div>
         <h3>How to Prepare</h3>
-        <Form getData = {callbackFunction}/>
+        <Form getData = {callbackFunction} listen = {ping} name = 'instructions'/>
       </div>
 
       <div>
